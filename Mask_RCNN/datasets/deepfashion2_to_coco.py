@@ -105,8 +105,8 @@ dataset['categories'].append({
 
 sub_index = 0 # the index of ground truth instance
 for num in range(1,191962):
-    json_name = 'C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\annos\\' + str(num).zfill(6) + '.json'
-    image_name = 'C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\image\\' + str(num).zfill(6) +'.jpg'
+    json_name = 'C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\val_annos\\' + str(num).zfill(6) + '.json'
+    image_name = 'C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\val_image\\' + str(num).zfill(6) +'.jpg'
 
     if (num>=0):
         imag = Image.open(image_name)
@@ -231,7 +231,7 @@ for num in range(1,191962):
                     })
 
 
-json_name = 'C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\deepfashion2.json'
+json_name = 'C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\validation_json.json'
 with open(json_name, 'w') as f:
   json.dump(dataset, f)
 

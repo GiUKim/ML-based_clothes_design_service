@@ -76,15 +76,17 @@ class DeepFashion2Config(Config):
 
     USE_MINI_MASK = True
 
-    train_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\image"
-    train_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\deepfashion2.json"
-
+    train_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\train_image"
+    train_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\train_json.json"
+    valid_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\val_image"
+    valid_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\validation_json"
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 ############################################################
-#  Dataset
-############################################################
+#  Dataset################################
+
+############################
 class DeepFashion2Dataset(utils.Dataset):
     def load_coco(self, image_dir, json_path, class_ids=None,
                   class_map=None, return_coco=False):
@@ -234,18 +236,18 @@ class DeepFashion2Dataset(utils.Dataset):
         return m
 
 
-def train(model, config):
-    """
-    """
+def train(model,config):
+    """Train the model."""
+    # Training dataset.
     dataset_train = DeepFashion2Dataset()
     dataset_train.load_coco(config.train_img_dir, config.train_json_path)
     dataset_train.prepare()
 
-    #dataset_valid = DeepFashion2Dataset()
-    #dataset_valid.load_coco(config.valid_img_dir, config.valid_json_path)
-    #dataset_valid.prepare()
+    dataset_valid = DeepFashion2Dataset()
+    dataset_valid.load_coco(config.valid_img_dir, config.valid_json_path)
+    dataset_valid.prepare()
 
-    model.train(dataset_train,
+    model.train(dataset_train, dataset_valid,
                 learning_rate=config.LEARNING_RATE,
                 epochs=40,
                 layers='3+')
@@ -259,7 +261,6 @@ def color_splash(image, mask):
     """
     # Make a grayscale copy of the image. The grayscale copy still
     # has 3 RGB channels, though.
-    #gray = skimage.color.gray2rgb(skimage.color.rgb2gray(image)) * 255
     gray = 210
     # Copy color pixels from the original color image where mask is set
     if mask.shape[-1] > 0:
@@ -328,7 +329,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
 ############################################################
 
 if __name__ == "__main__":
-    ROOT_DIR = os.path.abspath("./")
+    ROOT_DIR = os.path.abspath("C:\\Users\\123\\Desktop\\Mask_RCNN")
     DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "logs")
     COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
     import argparse
@@ -367,7 +368,7 @@ if __name__ == "__main__":
     print("Logs: ", args.logs)
 
 
-     # Configurations
+    # Configurations
     if args.command == "train":
         config = DeepFashion2Config()
     else:
@@ -408,11 +409,11 @@ if __name__ == "__main__":
         # Exclude the last layers because they require a matching
         # number of classes
         model.load_weights(weights_path, by_name=True, exclude=[
-            "mrcnn_class_logits", "mrcnn_bbox_fc",
+           "mrcnn_class_logits", "mrcnn_bbox_fc",
             "mrcnn_bbox", "mrcnn_mask"])
     else:
         model.load_weights(weights_path, by_name=True)
-
+ 
     # Train or evaluate
     if args.command == "train":
         train(model, config)
@@ -421,4 +422,4 @@ if __name__ == "__main__":
                                 video_path=args.video)
     else:
         print("'{}' is not recognized. "
-              "Use 'train' or 'splash'".format(args.command))
+              "Use 'train' or 'splash'".format(args.command)) 
