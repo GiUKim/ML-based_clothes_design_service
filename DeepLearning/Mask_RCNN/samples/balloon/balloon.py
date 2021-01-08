@@ -76,9 +76,10 @@ class DeepFashion2Config(Config):
 
     USE_MINI_MASK = True
 
-    train_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\image"
-    train_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\deepfashion2.json"
-
+    train_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\train_image"
+    train_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\train_json.json"
+    valid_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\val_image"
+    valid_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\validation_json"
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
@@ -242,7 +243,11 @@ def train(model,config):
     dataset_train.load_coco(config.train_img_dir, config.train_json_path)
     dataset_train.prepare()
 
-    model.train(dataset_train,
+    dataset_valid = DeepFashion2Dataset()
+    dataset_valid.load_coco(config.valid_img_dir, config.valid_json_path)
+    dataset_valid.prepare()
+
+    model.train(dataset_train, dataset_valid,
                 learning_rate=config.LEARNING_RATE,
                 epochs=40,
                 layers='3+')
@@ -256,7 +261,7 @@ def color_splash(image, mask):
     """
     # Make a grayscale copy of the image. The grayscale copy still
     # has 3 RGB channels, though.
-    gray = skimage.color.gray2rgb(skimage.color.rgb2gray(image)) * 1024
+    gray = 210
     # Copy color pixels from the original color image where mask is set
     if mask.shape[-1] > 0:
         # We're treating all instances as one, so collapse the mask into one layer
