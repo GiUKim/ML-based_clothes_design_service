@@ -79,7 +79,7 @@ class DeepFashion2Config(Config):
     train_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\train_image"
     train_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\train_json.json"
     valid_img_dir = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\val_image"
-    valid_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\validation_json"
+    valid_json_path = "C:\\Users\\123\\Desktop\\Mask_RCNN\\datasets\\validation_json.json"
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
