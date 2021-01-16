@@ -1,5 +1,8 @@
 # Mask R-CNN for Object Detection and Segmentation
 
+## 가상환경 세팅
+### anaconda prompt ./DeepLearning 경로에서  conda env create -f ./Mask_RCNN.yaml 명령 입력!!
+
 * [테스팅]
     * python .\\samples\balloon\\balloon.py splash --weights=.\\logs\\deepfashion220210104T0346\\mask_rcnn_deepfashion2_0040.h5 --image=.\\datasets\\image\\000071.jpg
 
