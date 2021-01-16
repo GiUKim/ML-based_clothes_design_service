@@ -1,5 +1,11 @@
 # Mask R-CNN for Object Detection and Segmentation
 
+* [테스팅]
+    * python .\\samples\balloon\\balloon.py splash --weights=.\\logs\\deepfashion220210104T0346\\mask_rcnn_deepfashion2_0040.h5 --image=.\\datasets\\image\\000071.jpg
+
+* [트레이닝]
+    * python .\\samples\\balloon\\balloon.py train --weights=coco
+
 This is an implementation of [Mask R-CNN](https://arxiv.org/abs/1703.06870) on Python 3, Keras, and TensorFlow. The model generates bounding boxes and segmentation masks for each instance of an object in the image. It's based on Feature Pyramid Network (FPN) and a ResNet101 backbone.
 
 ![Instance Segmentation Sample](assets/street.png)
