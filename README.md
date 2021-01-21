@@ -4,7 +4,7 @@
 ### anaconda prompt DeepLearning 경로에서  conda env create -f ./Mask_RCNN.yaml 명령 입력!!
 
 * [테스팅]
-    * python .\\samples\balloon\\balloon.py splash --weights=.\\logs\\deepfashion220210104T0346\\mask_rcnn_deepfashion2_0040.h5 --image=.\\datasets\\image\\000071.jpg
+    * python .\samples\balloon\balloon.py splash --weights=.\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5 --image=.\datasets\test\test\image\000071.jpg
 
 * [트레이닝]
     * python .\\samples\\balloon\\balloon.py train --weights=coco
