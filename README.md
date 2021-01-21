@@ -1,6 +1,6 @@
 # Mask R-CNN for Object Detection and Segmentation
 
-[<trained weight file>](https://drive.google.com/file/d/1SB9HVItbI86-f2rKq3HYAGd9evUzHe7a/view?usp=sharing)
+[trained weight file](https://drive.google.com/file/d/1SB9HVItbI86-f2rKq3HYAGd9evUzHe7a/view?usp=sharing)
 
 
 ## 가상환경 세팅
