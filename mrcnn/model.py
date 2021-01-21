@@ -16,7 +16,9 @@ import logging
 from collections import OrderedDict
 import multiprocessing
 import numpy as np
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior() 
 import keras
 import keras.backend as K
 import keras.layers as KL
@@ -1420,7 +1422,7 @@ def build_detection_targets(rpn_rois, gt_class_ids, gt_boxes, gt_masks, config):
         gt_id = roi_gt_assignment[i]
         class_mask = gt_masks[:, :, gt_id]
 
-        if config.USE_MINI_MASK:
+        if config.USE_MINI_MASK: 
             # Create a mask placeholder, the size of the image
             placeholder = np.zeros(config.IMAGE_SHAPE[:2], dtype=bool)
             # GT box
@@ -1839,7 +1841,7 @@ class MaskRCNN():
     def build(self, mode, config):
         """Build Mask R-CNN architecture.
             input_shape: The shape of the input image.
-            mode: Either "training" or "inference". The inputs and
+            mode: Either "training" or "inference". The inputs and  
                 outputs of the model differ accordingly.
         """
         assert mode in ['training', 'inference']
