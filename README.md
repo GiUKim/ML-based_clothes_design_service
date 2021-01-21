@@ -17,7 +17,7 @@ conda create -n (envname) python=3.6.5
 
 conda activate (envname)
 
-[참조링크]: https://chancoding.tistory.com/86
+[참조링크][https://chancoding.tistory.com/86]
 
 ---
 
