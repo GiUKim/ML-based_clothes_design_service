@@ -37,7 +37,7 @@ pip install keras==2.1.5
 
 pip install "h5py<3.0"
 
-pip install --upgrade cython
+pip install Cython
 
 pip3 install "git+https://github.com/philferriere/cocoapi.git#egg=pycocotools&subdirectory=PythonAPI"
 
