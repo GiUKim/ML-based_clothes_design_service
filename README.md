@@ -1,5 +1,8 @@
 # Mask R-CNN for Object Detection and Segmentation
 
+https://drive.google.com/file/d/1SB9HVItbI86-f2rKq3HYAGd9evUzHe7a/view?usp=sharing
+
+
 ## 가상환경 세팅
 ### anaconda prompt DeepLearning 경로에서  conda env create -f ./Mask_RCNN.yaml 명령 입력!!
 
