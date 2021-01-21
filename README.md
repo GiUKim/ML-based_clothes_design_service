@@ -8,7 +8,6 @@
 
 ---
 
-## CUDA9.0 Windows10 (Training)
 ## 가상환경 세팅
 
 파이썬 3.6.5 버전의 가상환경 생성
@@ -22,6 +21,8 @@ conda activate (envname)
 ---
 
 ## 필요한 모듈 설치
+
+### CUDA9.0 Windows10 (Training)
 
 pip install numpy==1.16.1
 
