@@ -17,14 +17,23 @@
 ## 필요한 모듈 설치
 
 pip install "numpy<1.13.0"
+
 pip install scikit-image
+
 pip install tensorflow-gpu==1.5
+
 __mrcnn/model.py line20, 21을 주석처리하고 line19 주석 해제한다.__
+
 pip install "numpy==1.16.1"
+
 pip install keras==2.1.5
+
 pip install "h5py<3.0"
+
 pip install --upgrade cython
+
 pip3 install "git+https://github.com/philferriere/cocoapi.git#egg=pycocotools&subdirectory=PythonAPI"
+
 
 ---
 
