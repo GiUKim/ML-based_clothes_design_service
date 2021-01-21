@@ -22,7 +22,7 @@ conda activate (envname)
 
 ## 필요한 모듈 설치
 
-### CUDA9.0 Windows10 (Training)
+### CUDA9.0 Windows10
 
 pip install numpy==1.16.1
 
