@@ -50,6 +50,8 @@ pip3 install "git+https://github.com/philferriere/cocoapi.git#egg=pycocotools&su
 
 ---
 
+## 명령어
+
 * [테스팅]
     * python .\samples\balloon\balloon.py splash --weights=.\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5 --image=.\datasets\test\test\image\000071.jpg
 
