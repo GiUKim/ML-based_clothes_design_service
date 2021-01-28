@@ -35,7 +35,7 @@ import numpy as np
 import skimage.draw
 
 # Root directory of the project
-ROOT_DIR = os.path.abspath("C:\\Users\\82108\\Documents\\마스크")
+ROOT_DIR = os.path.abspath("C:\\Users\\123\\Desktop\\Mask_RCNN")
 
 # Import Mask RCNN
 sys.path.append(ROOT_DIR)  # To find local version of the library
@@ -235,6 +235,11 @@ class DeepFashion2Dataset(utils.Dataset):
         m = maskUtils.decode(rle)
         return m
 
+#  class InferenceConfig(ShapesConfig):
+#      GPU_COUNT = 1
+#      IMAGES_PER_GPU = 1
+
+# inference_config = InferenceConfig()
 
 def train(model,config):
     """Train the model."""
@@ -249,8 +254,26 @@ def train(model,config):
 
     model.train(dataset_train, dataset_valid,
                 learning_rate=config.LEARNING_RATE,
-                epochs=40,
+                epochs=1,
                 layers='3+')
+    # image_ids = np.random.choice(dataset_valid.image_ids, 10)
+    # APs = []
+    # for image_id in image_ids:
+    #     # Load image and ground truth data
+    #     image, image_meta, gt_class_id, gt_bbox, gt_mask = \
+    #         modellib.load_image_gt(dataset_valid, inference_config,
+    #                                image_id, use_mini_mask=False)
+    #     molded_images = np.expand_dims(modellib.mold_image(image, inference_config), 0)
+    #     # Run object detection
+    #     results = model.detect([image], verbose=0)
+    #     r = results[0]
+    #     # Compute AP
+    #     AP, precisions, recalls, overlaps = \
+    #         utils.compute_ap(gt_bbox, gt_class_id, gt_mask,
+    #                          r["rois"], r["class_ids"], r["scores"], r['masks'])
+    #     APs.append(AP)
+
+    # print("mAP: ", np.mean(APs))
 
 def color_splash(image, mask):
     """Apply color splash effect.
@@ -400,6 +423,7 @@ if __name__ == "__main__":
     elif args.weights.lower() == "imagenet":
         # Start from ImageNet trained weights
         weights_path = model.get_imagenet_weights()
+
     else:
         weights_path = args.weights
 
@@ -420,6 +444,33 @@ if __name__ == "__main__":
     elif args.command == "splash":
         detect_and_color_splash(model, image_path=args.image,
                                 video_path=args.video)
+        
+    elif args.command == "evaluate":
+        dataset_val = DeepFashion2Dataset()
+        dataset_val.load_coco(config.valid_img_dir, config.valid_json_path)
+        dataset_val.prepare()
+
+        image_ids = np.random.choice(dataset_val.image_ids, 10)
+        #image_ids = np.array([150])
+        APs = []
+        for image_id in image_ids:
+            # Load image and ground truth data
+            image, image_meta, gt_class_id, gt_bbox, gt_mask = \
+                modellib.load_image_gt(dataset_val, config,
+                                    image_id, use_mini_mask=False)
+            molded_images = np.expand_dims(modellib.mold_image(image, config), 0)
+            # Run object detection
+            results = model.detect([image], verbose=0)
+            r = results[0]
+            # Compute AP
+            AP, precisions, recalls, overlaps = \
+                utils.compute_ap(gt_bbox, gt_class_id, gt_mask,
+                                r["rois"], r["class_ids"], r["scores"], r['masks'], 0.5)
+            APs.append(AP)
+
+        #print("mAP: ", np.mean(APs))
+        print("ap: ", APs)
+
     else:
         print("'{}' is not recognized. "
               "Use 'train' or 'splash'".format(args.command))
