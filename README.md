@@ -59,6 +59,6 @@ pip3 install "git+https://github.com/philferriere/cocoapi.git#egg=pycocotools&su
     * python .\\samples\\balloon\\balloon.py train --weights=coco
 
 * [평가]
-    * python .\\samples\\balloon\\balloon.py evaluate --weights=..\..\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5
+    * python .\\samples\\balloon\\balloon.py evaluate --weights=.\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5
 
 
