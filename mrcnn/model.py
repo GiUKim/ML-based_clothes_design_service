@@ -1074,7 +1074,7 @@ def rpn_bbox_loss_graph(config, target_bbox, rpn_match, rpn_bbox):
                                    config.IMAGES_PER_GPU)
 
     loss = smooth_l1_loss(target_bbox, rpn_bbox)
-    
+
     loss = K.switch(tf.size(loss) > 0, K.mean(loss), tf.constant(0.0))
     return loss
 
@@ -1428,7 +1428,7 @@ def build_detection_targets(rpn_rois, gt_class_ids, gt_boxes, gt_masks, config):
         gt_id = roi_gt_assignment[i]
         class_mask = gt_masks[:, :, gt_id]
 
-        if config.USE_MINI_MASK: 
+        if config.USE_MINI_MASK:
             # Create a mask placeholder, the size of the image
             placeholder = np.zeros(config.IMAGE_SHAPE[:2], dtype=bool)
             # GT box
@@ -1830,6 +1830,8 @@ class MaskRCNN():
 
     The actual Keras model is in the keras_model property.
     """
+    def save(self, save_path):
+        self.keras_model.save(save_path)
 
     def __init__(self, mode, config, model_dir):
         """
@@ -1847,7 +1849,7 @@ class MaskRCNN():
     def build(self, mode, config):
         """Build Mask R-CNN architecture.
             input_shape: The shape of the input image.
-            mode: Either "training" or "inference". The inputs and  
+            mode: Either "training" or "inference". The inputs and
                 outputs of the model differ accordingly.
         """
         assert mode in ['training', 'inference']
@@ -2011,8 +2013,8 @@ class MaskRCNN():
                                               config.NUM_CLASSES,
                                               train_bn=config.TRAIN_BN)
 
-            
-            
+
+
             # TODO: clean up (use tf.identify if necessary)
             output_rois = KL.Lambda(lambda x: x * 1, name="output_rois")(rois)
 
@@ -2041,7 +2043,7 @@ class MaskRCNN():
             inputs = [input_image, input_image_meta,
                       input_rpn_match, input_rpn_bbox, input_gt_class_ids, input_gt_boxes, input_gt_masks]
             if not config.USE_RPN_ROIS:
-                inputs.append(input_rois) 
+                inputs.append(input_rois)
             outputs = [rpn_class_logits, rpn_class, rpn_bbox,
                        mrcnn_class_logits, mrcnn_class, mrcnn_bbox, mrcnn_mask,
                        rpn_rois, output_rois,
@@ -2069,7 +2071,7 @@ class MaskRCNN():
                                               config.MASK_POOL_SIZE,
                                               config.NUM_CLASSES,
                                               train_bn=config.TRAIN_BN)
-            
+
             model = KM.Model([input_image, input_image_meta, input_anchors],
                              [detections, mrcnn_class, mrcnn_bbox,
                                  mrcnn_mask, rpn_rois, rpn_class, rpn_bbox],
@@ -2391,8 +2393,8 @@ class MaskRCNN():
             validation_data=val_generator,
             validation_steps=self.config.VALIDATION_STEPS,
             max_queue_size=100,
-            workers=workers,
-            use_multiprocessing=True,
+            workers=1,
+            use_multiprocessing= False,
         )
         self.epoch = max(self.epoch, epochs)
 

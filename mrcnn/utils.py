@@ -364,6 +364,7 @@ class Dataset(object):
         """
         # Load image
         image = skimage.io.imread(self.image_info[image_id]['path'])
+
         # If grayscale. Convert to RGB for consistency.
         if image.ndim != 3:
             image = skimage.color.gray2rgb(image)
@@ -752,10 +753,9 @@ def compute_ap(gt_boxes, gt_class_ids, gt_masks,
 
     # Compute mean AP over recall range
     indices = np.where(recalls[:-1] != recalls[1:])[0] + 1
+    #print("***indices", indices)
     mAP = np.sum((recalls[indices] - recalls[indices - 1]) *
                  precisions[indices])
-
-
 
     return mAP, precisions, recalls, overlaps
 
