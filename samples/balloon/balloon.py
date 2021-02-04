@@ -86,7 +86,6 @@ class DeepFashion2Config(Config):
 ############################################################
 #  Dataset################################
 
-############################
 class DeepFashion2Dataset(utils.Dataset):
     def load_coco(self, image_dir, json_path, class_ids=None,
                   class_map=None, return_coco=False):
@@ -235,12 +234,6 @@ class DeepFashion2Dataset(utils.Dataset):
         m = maskUtils.decode(rle)
         return m
 
-#  class InferenceConfig(ShapesConfig):
-#      GPU_COUNT = 1
-#      IMAGES_PER_GPU = 1
-
-# inference_config = InferenceConfig()
-
 def train(model,config):
     """Train the model."""
     # Training dataset.
@@ -254,26 +247,8 @@ def train(model,config):
 
     model.train(dataset_train, dataset_valid,
                 learning_rate=config.LEARNING_RATE,
-                epochs=1,
+                epochs=30,
                 layers='3+')
-    # image_ids = np.random.choice(dataset_valid.image_ids, 10)
-    # APs = []
-    # for image_id in image_ids:
-    #     # Load image and ground truth data
-    #     image, image_meta, gt_class_id, gt_bbox, gt_mask = \
-    #         modellib.load_image_gt(dataset_valid, inference_config,
-    #                                image_id, use_mini_mask=False)
-    #     molded_images = np.expand_dims(modellib.mold_image(image, inference_config), 0)
-    #     # Run object detection
-    #     results = model.detect([image], verbose=0)
-    #     r = results[0]
-    #     # Compute AP
-    #     AP, precisions, recalls, overlaps = \
-    #         utils.compute_ap(gt_bbox, gt_class_id, gt_mask,
-    #                          r["rois"], r["class_ids"], r["scores"], r['masks'])
-    #     APs.append(AP)
-
-    # print("mAP: ", np.mean(APs))
 
 def color_splash(image, mask):
     """Apply color splash effect.
@@ -284,6 +259,7 @@ def color_splash(image, mask):
     """
     # Make a grayscale copy of the image. The grayscale copy still
     # has 3 RGB channels, though.
+    #gray = skimage.color.gray2rgb(skimage.color.rgb2gray(image)) * 0
     gray = 210
     # Copy color pixels from the original color image where mask is set
     if mask.shape[-1] > 0:
@@ -304,6 +280,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         print("Running on {}".format(args.image))
         # Read image
         image = skimage.io.imread(args.image)
+
         # Detect objects
         r = model.detect([image], verbose=1)[0]
         # Color splash
@@ -435,6 +412,7 @@ if __name__ == "__main__":
         model.load_weights(weights_path, by_name=True, exclude=[
            "mrcnn_class_logits", "mrcnn_bbox_fc",
             "mrcnn_bbox", "mrcnn_mask"])
+
     else:
         model.load_weights(weights_path, by_name=True)
 
@@ -450,15 +428,25 @@ if __name__ == "__main__":
         dataset_val.load_coco(config.valid_img_dir, config.valid_json_path)
         dataset_val.prepare()
 
-        image_ids = np.random.choice(dataset_val.image_ids, 10)
-        #image_ids = np.array([150])
+        #image_ids = np.random.choice(dataset_val.image_ids, 20)
+        image_ids = np.array([149, 245, 373, 445, 466, 692, 773, 956, 1010, 1048])
+        cnt = 0
+        sum = 0
+        #image_ids = np.array([21403])
         APs = []
+        OVs = []
+
         for image_id in image_ids:
             # Load image and ground truth data
+            #_img = skimage.io.imread("..\\..\\datasets\\val_image\\000004.jpg")
             image, image_meta, gt_class_id, gt_bbox, gt_mask = \
                 modellib.load_image_gt(dataset_val, config,
                                     image_id, use_mini_mask=False)
+            #molded_images = modellib.mold_image(image, config)
             molded_images = np.expand_dims(modellib.mold_image(image, config), 0)
+            #np.squeeze(molded_images, axis=None)
+            #molded_images.reshape()
+
             # Run object detection
             results = model.detect([image], verbose=0)
             r = results[0]
@@ -466,11 +454,25 @@ if __name__ == "__main__":
             AP, precisions, recalls, overlaps = \
                 utils.compute_ap(gt_bbox, gt_class_id, gt_mask,
                                 r["rois"], r["class_ids"], r["scores"], r['masks'], 0.5)
+            for i in overlaps:
+                if ~(i.any()) or AP != 0:
+                    OVs.append(np.max(i))
+
+
+            #if AP != 0:
+            #     APs.append(AP)
             APs.append(AP)
+            print("IMAGE#: ", image_id)
+            print("precisions: ", precisions)
+            print("recalls: ", recalls)
+            print("overlaps", overlaps)
+            print("AP: " , AP)
+            print("===========================")
 
-        #print("mAP: ", np.mean(APs))
-        print("ap: ", APs)
-
+        #print("ap: ", APs)
+        print("mAP: ", np.mean(APs))
+        print("mean_overlap: ", np.mean(OVs))
     else:
         print("'{}' is not recognized. "
               "Use 'train' or 'splash'".format(args.command))
+        
