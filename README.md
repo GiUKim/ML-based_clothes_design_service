@@ -22,13 +22,19 @@ conda activate (envname)
 
 ## 필요한 모듈 설치
 
-### CUDA9.0 Windows10
+### CUDA10.0 Cudnn7.6.4 Windows10
 
 pip install numpy==1.16.1
 
+pip install opencv-python
+
+pip install imgaug
+
+pip install Pillow
+
 pip install scikit-image
 
-pip install tensorflow-gpu==1.5
+pip install tensorflow-gpu==2.0
 
 __mrcnn/model.py line20, 21을 주석처리하고 line19 주석 해제한다.__
 
