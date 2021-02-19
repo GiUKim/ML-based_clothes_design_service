@@ -427,26 +427,25 @@ if __name__ == "__main__":
         dataset_val = DeepFashion2Dataset()
         dataset_val.load_coco(config.valid_img_dir, config.valid_json_path)
         dataset_val.prepare()
-
-        #image_ids = np.random.choice(dataset_val.image_ids, 20)
-        image_ids = np.array([149, 245, 373, 445, 466, 692, 773, 956, 1010, 1048])
+        # image_ids = np.array([11910, 5188, 7393, 19404, 8765])
+        # image_ids = np.array([21403])
+        # _img = skimage.io.imread("..\\..\\datasets\\val_image\\000004.jpg")
         cnt = 0
         sum = 0
-        #image_ids = np.array([21403])
+        # molded_images = modellib.mold_image(image, config)
+
+        # np.squeeze(molded_images, axis=None)
+        # molded_images.reshape()
+
+        image_ids = np.random.choice(dataset_val.image_ids, 2000)
         APs = []
         OVs = []
-
         for image_id in image_ids:
             # Load image and ground truth data
-            #_img = skimage.io.imread("..\\..\\datasets\\val_image\\000004.jpg")
             image, image_meta, gt_class_id, gt_bbox, gt_mask = \
                 modellib.load_image_gt(dataset_val, config,
                                     image_id, use_mini_mask=False)
-            #molded_images = modellib.mold_image(image, config)
             molded_images = np.expand_dims(modellib.mold_image(image, config), 0)
-            #np.squeeze(molded_images, axis=None)
-            #molded_images.reshape()
-
             # Run object detection
             results = model.detect([image], verbose=0)
             r = results[0]
@@ -455,24 +454,17 @@ if __name__ == "__main__":
                 utils.compute_ap(gt_bbox, gt_class_id, gt_mask,
                                 r["rois"], r["class_ids"], r["scores"], r['masks'], 0.5)
             for i in overlaps:
-                if ~(i.any()) or AP != 0:
+                if (~(i.any()) or AP != 0) and np.max(i) > 0.5:
                     OVs.append(np.max(i))
-
-
-            #if AP != 0:
-            #     APs.append(AP)
             APs.append(AP)
-            print("IMAGE#: ", image_id)
-            print("precisions: ", precisions)
-            print("recalls: ", recalls)
-            print("overlaps", overlaps)
-            print("AP: " , AP)
-            print("===========================")
-
-        #print("ap: ", APs)
+            # print("IMAGE#: ", image_id)
+            # print("precisions: ", precisions)
+            # print("recalls: ", recalls)
+            # print("overlaps", overlaps)
+            # print("AP: " , AP)
+            # print("===========================")
         print("mAP: ", np.mean(APs))
         print("mean_overlap: ", np.mean(OVs))
     else:
         print("'{}' is not recognized. "
               "Use 'train' or 'splash'".format(args.command))
-        

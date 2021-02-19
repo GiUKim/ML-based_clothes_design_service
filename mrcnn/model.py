@@ -71,7 +71,7 @@ class BatchNorm(KL.BatchNormalization):
             False: Freeze BN layers. Good when batch size is small
             True: (don't use). Set layer in training mode even when making inferences
         """
-        return super(self.__class__, self).call(inputs, training=training)D
+        return super(self.__class__, self).call(inputs, training=training)
 
 
 def compute_backbone_shapes(config, image_shape):
@@ -1217,13 +1217,13 @@ def load_image_gt(dataset, config, image_id, augment=False, augmentation=None,
     image = dataset.load_image(image_id)
     mask, class_ids = dataset.load_mask(image_id)
     original_shape = image.shape
-    #image, window, scale, padding, crop = utils.resize_image(
-    #    image,
-    #    min_dim=config.IMAGE_MIN_DIM,
-    #    min_scale=config.IMAGE_MIN_SCALE,
-    #    max_dim=config.IMAGE_MAX_DIM,
-    #    mode=config.IMAGE_RESIZE_MODE)
-    #    mask = utils.resize_mask(mask, scale, padding, crop)
+    image, window, scale, padding, crop = utils.resize_image(
+        image,
+        min_dim=config.IMAGE_MIN_DIM,
+        min_scale=config.IMAGE_MIN_SCALE,
+        max_dim=config.IMAGE_MAX_DIM,
+        mode=config.IMAGE_RESIZE_MODE)
+    mask = utils.resize_mask(mask, scale, padding, crop)
 
     # Random horizontal flips.
     # TODO: will be removed in a future update in favor of augmentation
@@ -2030,16 +2030,6 @@ class MaskRCNN():
             mask_loss = KL.Lambda(lambda x: mrcnn_mask_loss_graph(*x), name="mrcnn_mask_loss")(
                 [target_mask, target_class_ids, mrcnn_mask])
 
-            #print("*****", target_mask.numpy(), "******", mrcnn_mask.numpy())
-            #AP50 = utils.compute_overlaps_masks(target_mask, mrcnn_mask)
-            #AP50 = utils.compute_overlaps_masks(target_mask.dtype, mrcnn_mask.dtype)
-            # with tf.compat.v1.Session() as sess:
-            #     target_mask = sess.run(target_mask)
-            #     mrcnn_mask = sess.run(mrcnn_mask)
-            #     print(target_mask, mrcnn_mask)
-            # AP50 = utils.compute_overlaps_masks(target_mask.numpy(), mrcnn_mask.numpy())
-            # Model
-            #print("*****", type(input_gt_masks))
             inputs = [input_image, input_image_meta,
                       input_rpn_match, input_rpn_bbox, input_gt_class_ids, input_gt_boxes, input_gt_masks]
             if not config.USE_RPN_ROIS:

@@ -40,7 +40,7 @@ class Config(object):
     # Validation stats are also calculated at each epoch end and they
     # might take a while, so don't set this too small to avoid spending
     # a lot of time on validation stats.
-    STEPS_PER_EPOCH = 1000
+    STEPS_PER_EPOCH = 3000
 
     # Number of validation steps to run at the end of every training epoch.
     # A bigger number improves accuracy of validation stats, but slows
@@ -52,7 +52,8 @@ class Config(object):
     # You can also provide a callable that should have the signature
     # of model.resnet_graph. If you do so, you need to supply a callable
     # to COMPUTE_BACKBONE_SHAPE as well
-    BACKBONE = "resnet101"
+    #BACKBONE = "resnet101"
+    BACKBONE = "resnet50"
 
     # Only useful if you supply a callable to BACKBONE. Should compute
     # the shape of each layer of the FPN Pyramid.
@@ -70,7 +71,7 @@ class Config(object):
     TOP_DOWN_PYRAMID_SIZE = 256
 
     # Number of classification classes (including background)
-    NUM_CLASSES = 1  # Override in sub-classes
+    NUM_CLASSES = 14  # Override in sub-classes
 
     # Length of square anchor side in pixels
     RPN_ANCHOR_SCALES = (32, 64, 128, 256, 512)
@@ -182,7 +183,7 @@ class Config(object):
     LEARNING_MOMENTUM = 0.9
 
     # Weight decay regularization
-    WEIGHT_DECAY = 0.0001
+    WEIGHT_DECAY = 0.00001
 
     # Loss weights for more precise optimization.
     # Can be used for R-CNN training setup.
@@ -226,6 +227,11 @@ class Config(object):
         # Image meta data length
         # See compose_image_meta() for details
         self.IMAGE_META_SIZE = 1 + 3 + 3 + 4 + 1 + self.NUM_CLASSES
+
+    def to_dict(self):
+        return {a: getattr(self, a)
+                for a in sorted(dir(self))
+                if not a.startswith("__") and not callable(getattr(self, a))}
 
     def display(self):
         """Display Configuration values."""
