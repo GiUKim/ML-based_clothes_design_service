@@ -54,20 +54,19 @@ cocoapi 설치 및 빌드
 3) cocoapi/PythonAPI에서 make 명령어 실행
 
 * Window
-1) https://drive.google.com/drive/folders/1ntugt9tIfNjoYUa0VctDcF9Q7FencKzh?usp=sharing 에서 다운로드 후 DeepLearning 폴더에 압축해제
-2) cocoapi_window -> cocoapi로 디렉토리 이름 변경
-3) cocoapi/PythonAPI에서 python setup.py install 명령어 실행
+1) DeepLearning 폴더에서 git clone https://github.com/philferriere/cocoapi.git하여 cocoapi 다운로드
+2) cocoapi/PythonAPI에서 python setup.py install 명령어 실행
 
 
 ## 명령어
 
 * [테스팅]
-    * python .\samples\balloon\balloon.py splash --weights=.\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5 --image=.\datasets\test\test\image\000071.jpg
+    * python ./samples/balloon/balloon.py splash --weights=./logs/deepfashion220210218T1837/mask_rcnn_deepfashion2_0030.h5 --image=./datasets/test/test/image/001187.jpg
 
 * [트레이닝]
     * python .\\samples\\balloon\\balloon.py train --weights=coco
 
 * [평가]
-    * python .\\samples\\balloon\\balloon.py evaluate --weights=.\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5
+    * python .\\samples\\balloon\\balloon.py evaluate --weights=.\\logs\\deepfashion220210218T1837\\mask_rcnn_deepfashion2_0030.h5
 
 
