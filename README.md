@@ -54,7 +54,7 @@ cocoapi 설치 및 빌드
 3) cocoapi/PythonAPI에서 make 명령어 실행
 
 * Window
-1) DeepLearning 폴더에서 git clone https://github.com/philferriere/cocoapi.git하여 cocoapi 다운로드
+1) DeepLearning 폴더에서 git clone https://github.com/philferriere/cocoapi.git
 2) cocoapi/PythonAPI에서 python setup.py install 명령어 실행
 
 
