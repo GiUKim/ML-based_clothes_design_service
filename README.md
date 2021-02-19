@@ -48,12 +48,12 @@ visualize.py 24 라인 경로 본인 로컬 경로에 맞게 수정 필요
 
 cocoapi 설치 및 빌드
 
-＊Linux(코랩)
+* Linux(코랩)
 1) https://drive.google.com/drive/folders/1UtmGqkv0F4DcunKIylgzdQ4_biRnraQL?usp=sharing 에서 다운로드
 2) cocoapi_linux -> cocoapi로 디렉토리 이름 변경
 3) cocoapi/PythonAPI에서 make 명령어 실행
 
- * Window
+* Window
 1) https://drive.google.com/drive/folders/1ntugt9tIfNjoYUa0VctDcF9Q7FencKzh?usp=sharing 에서 다운로드
 2) cocoapi_window -> cocoapi로 디렉토리 이름 변경
 3) cocoapi/PythonAPI에서 python setup.py install 명령어 실행
