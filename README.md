@@ -64,9 +64,9 @@ cocoapi 설치 및 빌드
     * python ./samples/balloon/balloon.py splash --weights=./logs/deepfashion220210218T1837/mask_rcnn_deepfashion2_0030.h5 --image=./datasets/test/test/image/001187.jpg
 
 * [트레이닝]
-    * python .\\samples\\balloon\\balloon.py train --weights=coco
+    * python ./samples/balloon/balloon.py train --weights=coco
 
 * [평가]
-    * python .\\samples\\balloon\\balloon.py evaluate --weights=.\\logs\\deepfashion220210218T1837\\mask_rcnn_deepfashion2_0030.h5
+    * python ./samples/balloon/balloon.py evaluate --weights=./logs/deepfashion220210218T1837/mask_rcnn_deepfashion2_0030.h5
 
 
