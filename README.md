@@ -53,7 +53,7 @@ cocoapi 설치 및 빌드
 2) cocoapi_linux -> cocoapi로 디렉토리 이름 변경
 3) cocoapi/PythonAPI에서 make 명령어 실행
 
-* Window
+ * Window
 1) https://drive.google.com/drive/folders/1ntugt9tIfNjoYUa0VctDcF9Q7FencKzh?usp=sharing 에서 다운로드
 2) cocoapi_window -> cocoapi로 디렉토리 이름 변경
 3) cocoapi/PythonAPI에서 python setup.py install 명령어 실행
