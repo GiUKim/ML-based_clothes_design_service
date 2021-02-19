@@ -43,8 +43,11 @@ pip install "h5py<3.0"
 pip install Cython
 
 ********본인 로컬 경로에 맞게 코드 수정 필요********
+
 balloon.py 38, 79~82 라인 경로 본인 로컬 경로에 맞게 수정 필요
+
 visualize.py 24 라인 경로 본인 로컬 경로에 맞게 수정 필요
+
 
 cocoapi 설치 및 빌드
 
