@@ -2,7 +2,10 @@
 
 [[원본 깃허브 주소]](https://github.com/matterport/Mask_RCNN)
 
-[[Download Link - trained weight file]](https://drive.google.com/file/d/1SB9HVItbI86-f2rKq3HYAGd9evUzHe7a/view?usp=sharing)
+logs 폴더 생성 후 weight file 다운로드 해서 추가
+
+[[Download Link - trained weight file]](https://drive.google.com/file/d/1U4KDC9Kq1lqJ7JCXQebyHufD0cgmR6nR/view?usp=sharing)
+
 
 [[Download Link - json files]](https://drive.google.com/drive/folders/1CHPFxcQ6OLFqkHgFsEPybe8kxAy-7-uW?usp=sharing)
 
@@ -64,12 +67,12 @@ cocoapi 설치 및 빌드
 ## 명령어
 
 * [테스팅]
-    * python ./samples/balloon/balloon.py splash --weights=./logs/deepfashion220210218T1837/mask_rcnn_deepfashion2_0030.h5 --image=./datasets/test/001186.jpg
+    * python ./samples/balloon/balloon.py splash --weights=./logs/mask_rcnn_deepfashion2_0030.h5 --image=./datasets/test/001186.jpg
 
 * [트레이닝]
     * python ./samples/balloon/balloon.py train --weights=coco
 
 * [평가]
-    * python ./samples/balloon/balloon.py evaluate --weights=./logs/deepfashion220210218T1837/mask_rcnn_deepfashion2_0030.h5
+    * python ./samples/balloon/balloon.py evaluate --weights=./logs/mask_rcnn_deepfashion2_0030.h5
 
 
