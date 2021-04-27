@@ -1,0 +1,27 @@
+doctype html5
+html
+  head
+  if `${loginfail}` === '1'
+    script.
+      var message = 'ID, Password error!' 
+      alert(message)
+
+  body(width='100%' height='100%')
+      link(rel='stylesheet' type='text/css' href='/stylesheets/style.css')
+      form.loginForm(action='/auth/login' method='post')
+        h2 Login
+        .idForm
+          input.id(type='text' name='username' placeholder='ID')
+        .passForm
+          input.pw(type='password' name='password' placeholder='PW')
+        button.btn(type='submit' onclick="button()")
+          | LOG IN
+          
+        script.
+          //- if(`${loginfail}` === '1'){
+          //-   alert('ID, Password error!')
+          //- }
+        .bottomText
+          | Don't you have ID? 
+          a(href='/auth/register') sign up
+

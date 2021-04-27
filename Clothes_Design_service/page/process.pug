@@ -1,0 +1,24 @@
+//- h1 #{info.id} #{info.image}
+doctype html
+html
+    head
+        meta(charset='utf-8')
+    body
+        link(rel='stylesheet' type='text/css' href='/stylesheets/style.css')
+        form(action='process' method='post' enctype="multipart/form-data")
+            .child-page-listing
+                h2 ALBUM
+                .grid-container
+                    
+                    article#3685.location-listing
+                        a.location-title(href='/upload')
+                            | My Album
+                        .location-image
+                            a(href='/upload')
+                                img(width='300' height='169' src='/uploads/'+`${orgimg.image}` alt='My Album')    
+                    article#3685.location-listing
+                        a.location-title(href='/album/'+`${newimg.real_id}`)
+                            | Save to Design Album
+                        .location-image   
+                            a(href='/album/'+`${newimg.real_id}`)
+                                img(width='300' height='169' src='/mask_output/'+`${newimg.image}` alt='Design Album') 

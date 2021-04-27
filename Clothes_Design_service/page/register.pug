@@ -1,0 +1,52 @@
+doctype html5
+- var uname = `${info.username}`;
+- var unick = `${info.displayName}`;
+- var umail = `${info.email}`;
+- var upass = `${info.password}`
+html
+  head 
+  body(width='100%' height='100%')
+      
+      link(rel='stylesheet' type='text/css' href='/stylesheets/style.css')
+      form.loginForm2(action='/auth/register' method='post')
+        h2 Register
+        if uname !== ""
+          .idForm
+            input.id(type='text' name='username' placeholder='ID' value=uname required)
+        else
+          .idForm
+            input.id(type='text' name='username' placeholder='ID' required)
+        if upass !== ""
+          .passForm
+            input.pw(type='password' name='password' placeholder='PW' value=upass required)
+        else
+          .passForm
+            input.pw(type='password' name='password' placeholder='PW' required)
+        
+        if uname !== "" || unick !== "" || umail !== "" || upass !== ""
+          .passForm
+            input.pw_p(type='password' name='re_password' placeholder='CONFIRM PW' required)
+        else
+          .passForm
+            input.pw(type='password' name='re_password' placeholder='CONFIRM PW' required)
+        if unick !== ""
+          .idForm
+            input.id(type='text' name='displayName' placeholder='NICKNAME' value=unick required)
+        else
+          .idForm
+            input.id(type='text' name='displayName' placeholder='NICKNAME' required)
+
+        if umail !== ""
+          .idForm
+            input.id(type='text' name='email' placeholder='EMAIL' value=umail required)
+        else
+          .idForm
+            input.id(type='text' name='email' placeholder='EMAIL' required)
+        <br> 
+        button.btn(type='submit' onclick='button()')
+          | SIGN UP
+        //- script.
+        //-   let button = () => {
+        //-   alert('SIGN IN Button !')
+        //-   }
+

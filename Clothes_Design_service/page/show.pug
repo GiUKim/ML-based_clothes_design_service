@@ -1,0 +1,33 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+    body
+        link(rel='stylesheet' type='text/css' href='/stylesheets/style.css')
+        form(action='upload' method='post' enctype="multipart/form-data")
+            input#profile_img_upload(type='file' accept='image/jpg,image/png,image/jpeg' name='userfile')
+            label(for='profile_img_upload')
+              i.far.fa-file-image select image
+            
+            input(type='submit')
+            //- input(type='file' name='userfile')
+            //- input(type='submit')     
+            a(href='/auth/logout')
+                | logout
+            
+
+            br
+            br
+            .child-page-listing
+                h2 ALBUM
+                .grid-container
+                    //- for(var i=0; i < len, ++i)
+                    each val, index in file
+                        //- li= index+ ': ' + val.image 
+                        article#3685.location-listing
+                            a.location-title(href='/process/'+`${val.id}`)
+                                | Go to Segmentation
+                            .location-image
+                                //- a(href='/process/'+`${val.id}`)
+                                a(href='/process/'+`${val.id}`)
+                                    img(width='300' height='169' src='/uploads/'+`${val.image}` alt='san francisco')
