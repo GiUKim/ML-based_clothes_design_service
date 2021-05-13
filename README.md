@@ -24,7 +24,11 @@ conda activate (envname)
 
 ### CUDA10.0 Cudnn7.6.4 Windows10
 
-pip install numpy==1.16.1
+pip install tensorflow-gpu==2.0
+
+pip install keras==2.3.1
+
+pip install numpy==1.19.2
 
 pip install opencv-python
 
@@ -34,37 +38,33 @@ pip install Pillow
 
 pip install scikit-image
 
-pip install tensorflow-gpu==2.0
-
-__mrcnn/model.py line20, 21을 주석처리하고 line19 주석 해제한다.__
-
-```
-import tensorflow as tf
-# import tensorflow.compat.v1 as tf
-# tf.disable_v2_behavior() 
-```
-
-
-pip install keras==2.1.5
-
 pip install "h5py<3.0"
 
 pip install Cython
 
-pip3 install "git+https://github.com/philferriere/cocoapi.git#egg=pycocotools&subdirectory=PythonAPI"
+********본인 로컬 경로에 맞게 코드 수정 필요********
+balloon.py 38, 79~82 라인 경로 본인 로컬 경로에 맞게 수정 필요
+visualize.py 24 라인 경로 본인 로컬 경로에 맞게 수정 필요
 
+cocoapi 설치 및 빌드
 
----
+* Linux(코랩)
+1) https://drive.google.com/drive/folders/1UtmGqkv0F4DcunKIylgzdQ4_biRnraQL?usp=sharing 에서 다운로드 후 DeepLearning 폴더에 압축해제
+2) cocoapi_linux -> cocoapi로 디렉토리 이름 변경
+3) cocoapi/PythonAPI에서 make 명령어 실행
+
+* Window
+1) DeepLearning 폴더에서 git clone https://github.com/philferriere/cocoapi.git하여 cocoapi 다운로드
+2) cocoapi/PythonAPI에서 python setup.py install 명령어 실행
+
 
 ## 명령어
 
 * [테스팅]
-    * python .\samples\balloon\balloon.py splash --weights=.\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5 --image=.\datasets\test\test\image\000071.jpg
+    * python ./samples/balloon/balloon.py splash --weights=./logs/deepfashion220210218T1837/mask_rcnn_deepfashion2_0030.h5 --image=./datasets/test/test/image/001187.jpg
 
 * [트레이닝]
-    * python .\\samples\\balloon\\balloon.py train --weights=coco
+    * python ./samples/balloon/balloon.py train --weights=coco
 
 * [평가]
-    * python .\\samples\\balloon\\balloon.py evaluate --weights=.\logs\deepfashion220210108T1354\mask_rcnn_deepfashion2_0040.h5
-
-
+    * python ./samples/balloon/balloon.py evaluate --weights=./logs/deepfashion220210218T1837/mask_rcnn_deepfashion2_0030.h5
